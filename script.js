@@ -86,17 +86,39 @@ checkingOverlayBtn.onclick = () => {
   console.log('checking');
 };
 
+// SELECT FORM INPUT ELEMENTS
+
 submitRegistered.onclick = () => {
-  document.querySelector('.register').classList.add('hidden');
-  homeCont.classList.remove('hidden');
-  homeBtn.disabled = false;
-  transactBtn.disabled = false;
-  loanBtn.disabled = false;
-  saveBtn.disabled = false;
-  checkBalanceBtn.disabled = false;
+  // SELECT FORM INPUT ELEMENTS
+  const names = document.querySelector('#user-name');
+  const userAmount = document.querySelector('#user-amount').value;
+  const accountType = Array.from(document.querySelector('select').children);
+  accountType.forEach((option) => {
+      if ( option.selected === true ) {
+        console.log(option.value)
+    }
+  });
+  let firstName = names.value.split(' ')[0];
+  let secondName = names.value.split(' ')[1];
+
+  // CHECKING IF INPUT FIELDS ARE EMPTY
+  if (names === '' || userAmount === '') {
+    alert('Please Fill in REQUIRED Fields');
+  } else {
+    console.log(firstName, secondName, userAmount, accountType);
+    document.querySelector('.register').classList.add('hidden');
+    homeCont.classList.remove('hidden');
+    homeBtn.disabled = false;
+    transactBtn.disabled = false;
+    loanBtn.disabled = false;
+    saveBtn.disabled = false;
+    checkBalanceBtn.disabled = false;
+  }
+
+  newUser(firstName, secondName, balance, accountType);
 };
 
-overlay.addEventListener('click', (e) => {
+overlay.addEventListener('click', () => {
   if (saveInput === document.activeElement) {
     homeCont.classList.add('hidden');
     // RECEIVE DATA
@@ -106,4 +128,73 @@ overlay.addEventListener('click', (e) => {
 });
 
 // IMPLEMENTING THE CLASS FUNCTIONALITY
-class Bank {}
+class Bank {
+  constructor() {
+    this.listArr = [];
+  }
+  addClient(client) {
+    this.listArr.push(client);
+  }
+  checkBalance() {
+    return this.listArr[0]['balance'];
+  }
+  deposit(value) {
+    this.listArr[0]['balance'] += value;
+    return this.listArr[0]['balance'];
+  }
+  withdraw(value) {
+    try {
+      if (this.listArr[0]['balance'] > value) {
+        return (this.listArr[0]['balance'] -= value);
+      } else {
+        throw new Error('Not enough Amount');
+      }
+    } catch (error) {
+      alert('Error Withdrawing! Try again later');
+    } finally {
+      return this.listArr[0]['balance'];
+    }
+  }
+}
+
+class Client {
+  constructor(firstName, secondName, balance, accountType) {
+    this.firstName = firstName;
+    this.secondName = secondName;
+    this.balance = balance;
+    this.accountType = accountType;
+  }
+}
+
+// accountCreated.addClient(newClient);
+// console.log(accountCreated.checkBalance());
+// console.log(accountCreated.withdraw(500));
+
+let user;
+
+function newUser(firstName, secondName, balance, accountType) {
+  let newClient = new Client('Dennis', 'Otieno', 5000, 'savings');
+  let accountCreated = new Bank();
+  user = accountCreated.addClient(newClient);
+  return user;
+}
+
+function calculations(operation) {
+  switch (operation) {
+    case 'deposit':
+      let x = user.deposit(100);
+      console.log(x);
+      break;
+    case 'withdraw':
+      let y = user.withdraw(200);
+      console.log(y);
+      break;
+    case 'checkbalance':
+      user.checkBalance();
+      break;
+    default:
+      break;
+  }
+}
+
+// let x = calculations('deposit');
