@@ -92,8 +92,7 @@ submitRegistered.onclick = () => {
   // SELECT FORM INPUT ELEMENTS
   const names = document.querySelector('#user-name');
   const userAmount = document.querySelector('#user-amount').value;
-  const accountType = document.querySelector('select');
-  const accountVal = accountType.value;
+  const accountType = document.querySelector('select').value;
 
   let firstName = names.value.split(' ')[0];
   let secondName = names.value.split(' ')[1];
@@ -102,7 +101,6 @@ submitRegistered.onclick = () => {
   if (names === '' || userAmount === '') {
     alert('Please Fill in REQUIRED Fields');
   } else {
-    console.log(firstName, secondName, userAmount, accountVal);
     document.querySelector('.register').classList.add('hidden');
     homeCont.classList.remove('hidden');
     homeBtn.disabled = false;
@@ -170,7 +168,7 @@ class Client {
 let user;
 
 function newUser(firstName, secondName, balance, accountType) {
-  let newClient = new Client('Dennis', 'Otieno', 5000, 'savings');
+  let newClient = new Client(firstName, secondName, balance, accountType);
   let accountCreated = new Bank();
   user = accountCreated.addClient(newClient);
   return user;
