@@ -92,12 +92,9 @@ submitRegistered.onclick = () => {
   // SELECT FORM INPUT ELEMENTS
   const names = document.querySelector('#user-name');
   const userAmount = document.querySelector('#user-amount').value;
-  const accountType = Array.from(document.querySelector('select').children);
-  accountType.forEach((option) => {
-      if ( option.selected === true ) {
-        console.log(option.value)
-    }
-  });
+  const accountType = document.querySelector('select');
+  const accountVal = accountType.value;
+
   let firstName = names.value.split(' ')[0];
   let secondName = names.value.split(' ')[1];
 
@@ -105,7 +102,7 @@ submitRegistered.onclick = () => {
   if (names === '' || userAmount === '') {
     alert('Please Fill in REQUIRED Fields');
   } else {
-    console.log(firstName, secondName, userAmount, accountType);
+    console.log(firstName, secondName, userAmount, accountVal);
     document.querySelector('.register').classList.add('hidden');
     homeCont.classList.remove('hidden');
     homeBtn.disabled = false;
