@@ -6,6 +6,8 @@ const saveBtn = document.querySelector('#save-btn');
 const withdrawBtn = document.querySelector('#withdraw-btn');
 const checkBalanceBtn = document.querySelector('#check-balance');
 
+const submitRegistered = document.querySelector('#submit-registered');
+
 // OVERLAY BUTTONS
 const checkingOverlayBtn = document.querySelector('#overlay-checking');
 const savingsOverlayBtn = document.querySelector('#overlay-savings');
@@ -84,14 +86,24 @@ checkingOverlayBtn.onclick = () => {
   console.log('checking');
 };
 
+submitRegistered.onclick = () => {
+  document.querySelector('.register').classList.add('hidden');
+  homeCont.classList.remove('hidden');
+  homeBtn.disabled = false;
+  transactBtn.disabled = false;
+  loanBtn.disabled = false;
+  saveBtn.disabled = false;
+  checkBalanceBtn.disabled = false;
+};
+
 overlay.addEventListener('click', (e) => {
   if (saveInput === document.activeElement) {
+    homeCont.classList.add('hidden');
     // RECEIVE DATA
   } else {
     overlay.classList.add('hidden');
-    homeCont.classList.remove('hidden');
   }
 });
 
 // IMPLEMENTING THE CLASS FUNCTIONALITY
-class
+class Bank {}

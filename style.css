@@ -95,6 +95,7 @@ section:nth-child(2) {
   align-items: center;
   gap: 40px;
 }
+
 .account-container {
   width: 30%;
   height: 50%;
@@ -106,6 +107,34 @@ section:nth-child(2) {
   justify-content: space-between;
   padding: 20px;
   font-size: 24px;
+}
+
+.register {
+  width: 60%;
+  height: 60%;
+  position: relative;
+}
+
+.registered {
+  position: relative;
+  bottom: -100px;
+}
+
+select {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+}
+select option {
+  padding: 3px;
+}
+
+:disabled {
+  cursor: default;
+}
+:disabled:active {
+  transform: scale(1);
 }
 
 .check-balance {

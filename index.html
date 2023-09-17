@@ -19,19 +19,19 @@
       <div>
         <div class="item">
           <i class="fa fa-home"></i>
-          <button id="home-btn">Home</button>
+          <button id="home-btn" disabled>Home</button>
         </div>
         <div class="item">
           <i class="fa fa-money-bill"></i>
-          <button id="transact-btn">Transact</button>
+          <button id="transact-btn" disabled>Transact</button>
         </div>
         <div class="item">
           <i class="fa fa-exchange-alt"></i>
-          <button id="loans-btn">Loans</button>
+          <button id="loans-btn" disabled>Loans</button>
         </div>
         <div class="item">
           <i class="fa fa-coins"></i>
-          <button id="save-btn">Save</button>
+          <button id="save-btn" disabled>Save</button>
         </div>
       </div>
     </section>
@@ -41,7 +41,28 @@
         <p>What would you like to do today!?</p>
       </div>
       <div class="account-details">
-        <div class="account-container home">
+        <div class="register account-container">
+          <form action="#">
+            <div>
+              <div class="item">
+                <label for="user-name">NAMES:</label>
+                <input id="user-name" type="text" />
+              </div>
+              <div class="item">
+                <label for="user-amount">AMOUNT:</label>
+                <input id="user-amount" type="number" min="50" />
+              </div>
+            </div>
+            <div class="item registered">
+              <select name="account-type" id="account-type">
+                <option value="savings">SAVINGS</option>
+                <option value="checking">CHECKING</option>
+              </select>
+              <button type="submit" id="submit-registered">register</button>
+            </div>
+          </form>
+        </div>
+        <div class="account-container home hidden">
           <div>
             <span id="name">Dennis Otieno</span>
             <p id="balance">Balance: $100000</p>
@@ -57,7 +78,7 @@
           <p>Success: <span id="saved-checking-acc">$30000 saved</span></p>
         </div>
         <div class="account-container transact hidden">
-          <input type="number" min="100" max="5000000" id="withdraw-input"/>
+          <input type="number" min="100" max="5000000" id="withdraw-input" />
           <button type="submit" class="withdraw" id="withdraw-btn">
             withdraw
           </button>
@@ -65,13 +86,13 @@
         </div>
       </div>
       <div class="check-balance">
-        <button id="check-balance">Check Balance</button>
+        <button id="check-balance" disabled>Check Balance</button>
       </div>
     </section>
     <div class="overlay hidden">
       <div class="overlay-container">
         <p>Where do you want to save?</p>
-        <input id="save-input" type="number">
+        <input id="save-input" type="number" />
         <div class="overlay-btns">
           <button id="overlay-savings">savings</button>
           <button id="overlay-checking">checking</button>
