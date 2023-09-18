@@ -24,7 +24,6 @@ const saveInput = document.querySelector('#save-input');
 const withdrawInput = document.querySelector('#withdraw-input');
 
 // SELECTING THE DIVS HOLDING PARTICULAR INFORMATION
-const checkingCont = document.querySelector('.checking');
 const transactCont = document.querySelector('.transact');
 const homeCont = document.querySelector('.home');
 
@@ -47,92 +46,76 @@ function updateHomeScreen() {
 
 // EVENT LISTENERS
 homeBtn.onclick = () => {
-  // let accountType = user.listArr[0]['accountType'];
-
-  checkingCont.classList.add('hidden');
   transactCont.classList.add('hidden');
   homeCont.classList.remove('hidden');
-
-  // ownerName.textContent = `${user.listArr[0]['firstName']} ${user.listArr[0]['secondName']}`;
-  // balance.textContent =
-  //   accountType === 'savings'
-  //     ? `Balance: $${user.listArr[0]['savingBalance']}`
-  //     : `Balance: $${user.listArr[0]['checkingBalance']}`;
-  // accNum.textContent = `acc no: ${user.listArr[0]['accNum']} . ${accountType}`;
 
   updateHomeScreen();
 };
 
+// TOGGLES THE WITHDRAWAL INTERFACE
 transactBtn.onclick = () => {
-  checkingCont.classList.add('hidden');
-  homeCont.classList.add('hidden');
-  transactCont.classList.remove('hidden');
+  homeCont.classList.toggle('hidden');
+  transactCont.classList.toggle('hidden');
 };
 
 loanBtn.onclick = () => {
   alert('COMING SOON!!!');
 };
 
+// TOGGLES OVERLAY ON AND OFF ALLOWING FOR SAVE INTERFACE
 saveBtn.onclick = () => {
-  checkingCont.classList.add('hidden');
   transactCont.classList.add('hidden');
   homeCont.classList.add('hidden');
   overlay.classList.remove('hidden');
-  // TO CHANGE THIS IMMEDIATELY
-  calculations('deposit', user);
 };
 
+// CALLING THE FUNCTION TO WITHDRAW FROM BANK
 withdrawBtn.onclick = () => {
   let cashValue = Number(withdrawInput.value);
-
-  checkingCont.classList.add('hidden');
   transactCont.classList.remove('hidden');
   homeCont.classList.add('hidden');
-  calculations('withdraw', user, cashValue);
+  calculations(user, 'withdraw', cashValue);
   withdrawInput.value = '';
 };
 
 checkBalanceBtn.onclick = () => {
-  alert(
-    `Savings account Balance: $${user.listArr[0]['savingBalance']}\n\nChecking Account Balance $${user.listArr[0]['checkingBalance']}`
-  );
+  user.checkBalance();
 };
 
 // OVERLAY BUTTONS: SAVINGS EVENT LISTENERS
+
+// SAVING TO SAVINGS ACCOUNT EVENT LISTENER
 savingsOverlayBtn.onclick = () => {
-  checkingCont.classList.add('hidden');
   transactCont.classList.add('hidden');
   homeCont.classList.remove('hidden');
   overlay.classList.add('hidden');
-
   const inputSave = document.querySelector('#save-input').value;
-  calculations('deposit', user, Number(inputSave), 'savingBalance');
-  inputSave = '';
+  calculations(user, 'deposit', Number(inputSave), 'savingBalance');
 
   updateHomeScreen();
 };
 
+// SAVING TO CHECKING ACOUNT EVENT LISTENER
 checkingOverlayBtn.onclick = () => {
   transactCont.classList.add('hidden');
   homeCont.classList.remove('hidden');
   overlay.classList.add('hidden');
-  checkingCont.classList.add('hidden');
 
   const inputSave = document.querySelector('#save-input').value;
-  calculations('deposit', user, Number(inputSave), 'checkingBalance');
-  inputSave = '';
+  calculations(user, 'deposit', Number(inputSave), 'checkingBalance');
 
   updateHomeScreen();
 };
 
 // SELECT FORM INPUT ELEMENTS
-
-submitRegistered.onclick = () => {
+submitRegistered.onclick = (e) => {
+  e.preventDefault();
   // SELECT FORM INPUT ELEMENTS
   const names = document.querySelector('#user-name').value;
   const userAmount = document.querySelector('#user-amount').value;
   const accountType = document.querySelector('select').value;
 
+  // REGEX TO ONLY ALLOW SPACED NAMES
   let reg = /([a-zA-z]{2,10}) ([a-zA-z]{2,10})/gm.test(names);
 
   let firstName = names.split(' ')[0];
@@ -152,23 +135,10 @@ submitRegistered.onclick = () => {
     user = newUser(firstName, secondName, accountType, Number(userAmount));
   }
 
-  owner.textContent = `Hello ${user.listArr[0]['firstName']}! What would you like to do today!?`;
-  ownerName.textContent = `${user.listArr[0]['firstName']} ${user.listArr[0]['secondName']}`;
-  // balance.textContent =
-  //   accountType === 'savings'
-  //     ? `Balance: $${user.listArr[0]['savingBalance']}`
-  //     : `Balance: $${user.listArr[0]['checkingBalance']}`;
-
-  if (accountType === 'savings') {
-    balance.textContent = `Balance: $${user.listArr[0]['savingBalance']}`;
-  } else if (accountType === 'checking') {
-    balance.textContent = `Balance: $${user.listArr[0]['checkingBalance']}`;
-  } else {
-    return;
-  }
-  accNum.textContent = `acc no: ${user.listArr[0]['accNum']} . ${accountType}`;
+  updateHomeScreen();
 };
 
+// TOGGLE OVERLAY
 overlay.addEventListener('click', () => {
   if (saveInput === document.activeElement) {
     homeCont.classList.add('hidden');
@@ -183,13 +153,14 @@ class Bank {
     this.listArr = [];
     this.accountNumber = Math.floor(Math.random() * 10000000);
   }
-
   addClient(client) {
     client.accNum = this.accountNumber;
     this.listArr.push(client);
   }
   checkBalance() {
-    return this.listArr[0]['balance'];
+    alert(
+      `Savings account Balance: $${this.listArr[0]['savingBalance']}\n\nChecking Account Balance $${this.listArr[0]['checkingBalance']}`
+    );
   }
   deposit(value, acc) {
     this.listArr[0][acc] += value;
@@ -231,14 +202,10 @@ class Client {
   }
 }
 
-// accountCreated.addClient(newClient);
-// console.log(accountCreated.checkBalance());
-// console.log(accountCreated.withdraw(500));
-
+// CREATE A NEW USER AND INSTANTIATE THE CLIENT CLASS
 function newUser(firstName, secondName, accountType, userAmount) {
   let saveBal;
   let checkBal;
-  console.log(userAmount);
 
   if (accountType === 'savings') {
     saveBal = userAmount;
@@ -261,7 +228,8 @@ function newUser(firstName, secondName, accountType, userAmount) {
   return user;
 }
 
-function calculations(operation, user, cashValue, acc) {
+// PERFORM CALCULATIONS
+function calculations(user, operation = '', cashValue = '', acc = '') {
   switch (operation) {
     case 'deposit':
       user.deposit(cashValue, acc);
@@ -276,5 +244,3 @@ function calculations(operation, user, cashValue, acc) {
       break;
   }
 }
-
-// let x = calculations('deposit');
