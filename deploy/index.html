@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    />
+    <title>StackUp Bank</title>
+  </head>
+  <body>
+    <section>
+      <div>
+        <img src="bank_logo.svg" alt="bank logo" />
+      </div>
+      <div>
+        <div class="item">
+          <i class="fa fa-home"></i>
+          <button id="home-btn" disabled>Home</button>
+        </div>
+        <div class="item">
+          <i class="fa fa-money-bill"></i>
+          <button id="transact-btn" disabled>Transact</button>
+        </div>
+        <div class="item">
+          <i class="fa fa-exchange-alt"></i>
+          <button id="loans-btn" disabled>Loans</button>
+        </div>
+        <div class="item">
+          <i class="fa fa-coins"></i>
+          <button id="save-btn" disabled>Save</button>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="owner">
+        <p id="owner"></p>
+      </div>
+      <div class="account-details">
+        <div class="register account-container">
+          <form action="#">
+            <div>
+              <div class="item">
+                <label for="user-name">NAMES:</label>
+                <input
+                  id="user-name"
+                  type="text"
+                  required
+                  placeholder="John Doe"
+                />
+              </div>
+              <div class="item">
+                <label for="user-amount">AMOUNT:</label>
+                <input
+                  id="user-amount"
+                  type="number"
+                  min="500"
+                  required
+                  placeholder="MIN: $500"
+                />
+              </div>
+            </div>
+            <div class="item registered">
+              <select name="account-type" id="account-type">
+                <option value="savings">SAVINGS</option>
+                <option value="checking">CHECKING</option>
+              </select>
+              <button type="submit" id="submit-registered">register</button>
+            </div>
+          </form>
+        </div>
+        <div class="account-container home hidden">
+          <div>
+            <span id="name"></span>
+            <p id="balance"></p>
+          </div>
+          <p class="acc-number"></p>
+        </div>
+        <div class="account-container transact hidden">
+          <input type="number" min="100" max="5000000" id="withdraw-input" />
+          <button type="submit" class="withdraw" id="withdraw-btn">
+            withdraw
+          </button>
+        </div>
+      </div>
+      <div class="check-balance">
+        <button id="check-balance" disabled>Check Balance</button>
+      </div>
+    </section>
+    <div class="overlay hidden">
+      <div class="overlay-container">
+        <p>Where do you want to save?</p>
+        <input id="save-input" type="number" />
+        <div class="overlay-btns">
+          <button id="overlay-savings">savings</button>
+          <button id="overlay-checking">checking</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

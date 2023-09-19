@@ -27,3 +27,5 @@
 
 - The `switch` statement is incorporated in a function `calculations`, which receives its arguments with a some being optional as not all are used in the calls it makes.
   On clicking the `SAVE` button, an option for saving on the savings or checking account is given and on clicking either the `calculations` function is invoked which iniates the switch function that runs checking the various operations passed to it. The `user` instance of the `Bank` allows for access to its methods as it is a global variable.
+
+[STACKUP BANK](github.com 'LINK')
