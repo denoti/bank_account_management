@@ -133,9 +133,10 @@ submitRegistered.onclick = (e) => {
     saveBtn.disabled = false;
     checkBalanceBtn.disabled = false;
     user = newUser(firstName, secondName, accountType, Number(userAmount));
-  }
 
-  updateHomeScreen();
+    updateHomeScreen();
+    owner.textContent = `Hello ${user.listArr[0]['firstName']}, what would you like to do today !!!`;
+  }
 };
 
 // TOGGLE OVERLAY

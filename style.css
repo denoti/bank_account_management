@@ -2,6 +2,7 @@ body {
   margin: 0;
   display: grid;
   grid-template-columns: 2fr 5fr;
+  height: 100vh;
   padding: 0;
   position: relative;
 }
@@ -56,6 +57,7 @@ img {
   gap: 10px;
   margin-bottom: 20px;
 }
+
 button {
   border: none;
   cursor: pointer;
@@ -169,4 +171,50 @@ input {
 button.withdraw {
   background-color: antiquewhite;
   width: 100px;
+}
+
+/* MEDIA QUERIES  TO HANDLE SCREENS LESS THAN 600PX VALUES */
+@media screen and (max-width: 600px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+  section:nth-child(1) {
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  section:nth-child(1) div + div {
+    display: flex;
+    gap: 5px;
+    margin-right: 8px;
+  }
+  img {
+    width: 40px;
+  }
+
+  section:nth-child(1) div + div i {
+    display: none;
+  }
+
+  section:nth-child(2) {
+    height: 90vh;
+  }
+
+  button {
+    width: fit-content;
+    height: 30px;
+    font-size: 12px;
+  }
+  .item {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .account-container {
+    width: 80%;
+    height: 70%;
+  }
 }
